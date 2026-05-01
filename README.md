@@ -1,185 +1,160 @@
-# business-data-management-capstone
-"Comprehensive data analysis project applying statistical methods to real-world business scenarios"
-📊 Business Analytics Solution for Investigating Third-Party Motor Insurance Claims
+# Insurance Claims Operations Analytics — Right View Investigators
 
-A Case Study of Right View Investigators, Madurai
+> **Turning operational data into strategic decisions for a motor insurance investigation firm.**
 
-👩‍💼 Author: Muneeshwari N
+---
 
-Roll Number: 24ds3000101
-Program: IITM Online BS Degree in Data Science
-Institution: Indian Institute of Technology, Madras
+## Business Context
 
-🧭 Project Overview
+**Right View Investigators (RVI)** is a Madurai-based private investigation firm serving major Indian insurance companies — including Chola, Magma, Shriram, and Liberty Insurance — across third-party motor claims, bodily injury cases, and own-damage investigations.
 
-This project presents a data-driven business analytics solution designed to improve operational efficiency, financial tracking, and decision-making at Right View Investigators, a private investigation firm specializing in third-party motor insurance claim investigations.
+Despite handling **1,000+ active cases**, the firm operated with manual Excel tracking, no revenue visibility, and zero analytical infrastructure. This project built a full-scale data analytics solution directly from their operational records — identifying where money was stuck, where cases were stalling, and what the business needed to do next.
 
-By applying advanced statistical and analytical techniques, the study identifies key performance gaps, quantifies inefficiencies, and recommends actionable strategies for optimization.
+---
 
-🏢 About the Organization
+## The Business Problem
 
-Right View Investigators (RVI), established in 2017 and based in Madurai, Tamil Nadu, provides investigative services for insurance companies across India.
-Their primary focus areas include:
+Three critical gaps were costing RVI time and money:
 
-Third-Party Bodily Injury and Fatal Claims
+- **Operational blind spots** — No structured tracking of case turnaround times or workload distribution across investigators
+- **Revenue leakage** — ₹3.29M in unrealized income with no automated follow-up or monitoring system
+- **No data-driven strategy** — Decisions were being made on intuition, not evidence
 
-Own Damage (OD) Claims
+---
 
-Motor Accident Reconstructions
+## Dataset Overview
 
-Connected Investigations
+| Attribute | Detail |
+|---|---|
+| **Source** | Live operational records — `Combine RTI and Case Status Trial` |
+| **Period Covered** | January – June 2025 |
+| **Total Records** | 1,079 unique investigation cases |
+| **Fields** | 26 variables across operational, financial, investigative & admin domains |
+| **Collection Method** | Direct extraction from RVI's internal Excel tracking system |
 
-Key clients include Chola, Magma, Shriram, and Liberty Insurance, making RVI a trusted partner for major insurers.
+**Key field categories:**
+- Operational: Claim No., Status, Turnaround Time (TAT)
+- Investigation: Type, Police Station, RTI Date
+- Financial: Claim Amount, Fee Receipt, Payment Status
+- Administrative: Reporter, Mail Status, Dispatch Date
 
-⚙️ Problem Statement
+---
 
-RVI faced three major operational challenges:
+## Data Preparation
 
-Manual Tracking Inefficiencies – Excel-based tracking of 1,000+ cases led to inconsistent data and delayed processing.
+Before analysis, the dataset underwent structured cleaning:
 
-Revenue Monitoring Gaps – ₹1.15 million in pending payments were untracked and unmonitored.
+- Removed **3 duplicate records** (1,082 → 1,079 clean records)
+- Standardized all date formats to `DD/MM/YYYY`
+- Imputed **45% missing Submitted Dates** using Dispatch Date as a reliable proxy
+- Unified inconsistent column naming and corrected data type mismatches
+- Validated all financial fields for outliers using Z-score thresholds
 
-Lack of Analytical Insights – No system for fraud detection, trend analysis, or performance forecasting.
+---
 
-📂 Dataset & Metadata
+## Methodology
 
-Data Source: Real operational Excel dataset — “Combine RTI and Case Status Trial”
-Duration: January to June 2025
-Records: 1,079 unique cases
-Variables: 26 operational fields grouped into:
+**Statistical techniques applied:**
 
-Operational Fields (Claim No., Status, TAT)
+- **Descriptive Statistics** — Distribution profiling of TAT, claim amounts, and case volumes
+- **Chi-Square Test** — Tested independence between claim type and resolution status (χ² = 30.62, p < 0.001)
+- **Z-Score Analysis** — Flagged 12 extreme TAT outliers and 5 anomalous fee cases
+- **Correlation Analysis** — Confirmed no pricing dependency on TAT (R² = 0.005)
+- **Revenue Gap Analysis** — Quantified total unrealized income by status category
 
-Investigation Fields (Type, Police Station, RTI Date)
+**Tools used:**
 
-Financial Fields (Amount, Fee Receipt)
+| Purpose | Tools |
+|---|---|
+| Data Cleaning & Structuring | Microsoft Excel, Google Sheets |
+| Statistical Analysis | Python (Pandas, NumPy, SciPy) |
+| Visualization | Excel Charts, Pivot Tables |
+| Reporting & Presentation | PowerPoint, PDF |
 
-Administrative Fields (Reporter, Mail Status)
+---
 
-Key Statistics:
+## Key Insights
 
-Metric	Value
-Average Turnaround Time	87.5 days
-Average Claim Amount	₹3,192
-TP (Third-Party) Cases	688
-Submitted Status	62% of total cases
-🧹 Data Cleaning & Preparation
+### ⏱ Turnaround Time is High and Inconsistent
+- Average TAT: **87.5 days** | Median: **77 days** | Mode: **18 days**
+- Standard deviation of **67.7 days** signals severe inconsistency in case handling
+- Maximum TAT recorded: **589 days** — clear evidence of cases falling through the cracks
+- Right-skewed distribution confirms a minority of cases are dragging overall averages up
 
-A rigorous cleaning process was applied:
+### 💰 Revenue is Tied Up and Untracked
+- **₹2.14M** locked in submitted-but-unpaid cases
+- **₹1.15M** stuck in pending cases with no automated escalation
+- Total revenue gap: **₹3.29M** — unmonitored and unrecovered
 
-Removed duplicates (1082 → 1079 records)
+### 📋 Case Backlog is Concentrated in Third-Party Claims
+- **688 of 1,079 cases** are Third-Party (TP) claims
+- TP cases have a **37.6% pending rate** vs. 25.6% for Non-TP cases
+- Only **62% of total cases** have been submitted; **33% remain pending**
 
-Standardized date formats (DD/MM/YYYY)
+### 🏢 Client Concentration Poses a Risk
+- Top two clients — **Chola (18%) and Magma (17%)** — account for 35% of all cases
+- No structured SLA tracking exists for high-value client relationships
+- Heavy dependency on two clients creates revenue vulnerability
 
-Imputed 45% missing Submitted Dates using Dispatch Dates
+### 📊 Pricing is Standardized but Underoptimized
+- Most claims fall in the **₹1,500–₹5,500** band (Average: ₹3,192 | Median: ₹3,600)
+- No correlation between case complexity (TAT) and fee charged (R² = 0.005)
+- One-size-fits-all pricing leaves money on the table for complex, high-effort cases
 
-Unified column naming and ensured correct data types
+---
 
-📊 Analytical Methods
+## Business Recommendations
 
-The following analytical techniques were applied:
+### 1. Implement Case-Type SLAs
+Define turnaround benchmarks by case type (TP vs. Non-TP, bodily injury vs. OD). Automate alerts at 60-day and 90-day thresholds to prevent cases from aging silently.
 
-Descriptive Statistics: Mean, Median, Mode, Standard Deviation
+### 2. Build a Revenue Recovery Pipeline
+Flag and escalate all pending fee cases weekly. Assign ownership for follow-up on the ₹1.15M currently sitting untracked. Target: **₹200,000+ recovered within the first quarter of implementation.**
 
-Chi-Square Test: Relationship between claim type and status (χ² = 30.62, p < 0.001)
+### 3. Introduce Tiered Pricing
+Charge a complexity premium for cases that exceed median TAT by more than one standard deviation. This aligns revenue with actual investigative effort and improves margin on high-effort cases.
 
-Z-Score Analysis: Identified 12 extreme TAT outliers and 5 unusual fee cases
+### 4. Reduce Client Concentration Risk
+Actively develop 3–4 new insurer relationships to reduce Chola + Magma dependency below 25%. Create dedicated account management for top clients with formal SLA compliance reporting.
 
-Correlation Analysis: R² = 0.005 → no link between fee and TAT
+### 5. Replace Manual Tracking with a Structured Dashboard
+Move from Excel to a real-time operations dashboard tracking TAT, case status, client distribution, and revenue by week. This alone can reduce reporting time by an estimated **5–8 hours per week.**
 
-Revenue Gap Analysis: Quantified ₹3.29M in unrealized income
+---
 
-Tools Used:
+## Expected Impact
 
-Google Sheets, Microsoft Excel, Python (Pandas, NumPy)
+| Outcome | Target |
+|---|---|
+| Case backlog reduction | 20% within 6 months |
+| SLA compliance for key clients | 90%+ |
+| Revenue recovered from pending cases | ₹200,000+ |
+| Data accuracy improvement | 90%+ |
+| Reporting time saved per week | 5–8 hours |
 
-📈 Key Results & Findings
-🔹 Turnaround Time (TAT)
+---
 
-Mean: 87.5 days, Median: 77 days, Mode: 18 days
+## Project Files
 
-Right-skewed distribution → few extreme delays (max: 589 days)
+| File | Description |
+|---|---|
+| `Combine RTI and Case Status Trial_Midterm.xlsx` | Primary operational dataset |
+| `BDM-Proposal.pdf` | Project scope and analytical plan |
+| `BDM-Midterm Report.pdf` | Interim analysis and data preparation findings |
+| `BDM-Final Report.pdf` | Complete analysis, results, and recommendations |
+| `Insurance_Claims_Analytics_Presentation.pptx` | Executive summary deck |
 
-High variability (SD = 67.7 days) → inconsistent case processing
+---
 
-🔹 Claim Amount
+## Tech Stack
 
-Most claims between ₹1,500 – ₹5,500
+`Python` · `Pandas` · `NumPy` · `SciPy` · `Microsoft Excel` · `Google Sheets` · `PowerPoint`
 
-Average: ₹3,192 | Median: ₹3,600 | Mode: ₹1,800
+---
 
-No correlation between TAT and fees → standardized pricing
+## About
 
-🔹 Client Analysis
-
-Top Clients: Chola (18%), Magma (17%)
-
-Combined share: 35% of total cases
-
-Dependency risk identified → recommend client diversification
-
-🔹 Case Status
-Status	Count	Percentage
-Submitted	670	62%
-Pending	356	33%
-Completed	43	4%
-Withdrawn	7	0.6%
-
-→ TP cases had 37.6% pending rate vs 25.6% for Non-TP cases.
-
-🔹 Financial Insights
-
-₹2.14M tied in submitted cases
-
-₹1.15M in pending cases
-
-Total ₹3.29M of unrealized revenue
-
-💡 Strategic Recommendations
-Focus Area	Recommendations	Expected Impact
-Operational Efficiency	Implement case-type SLAs, automate alerts, resource balancing	20% backlog reduction
-Client Management	Dedicated managers for top clients, SLA compliance tracking	90%+ SLA compliance
-Financial Optimization	Tiered pricing for complex cases, revenue follow-up automation	₹200,000 recovery
-Data Quality & Reporting	Standardize fields, dropdown data entry, dashboards	90%+ data accuracy
-🚀 Expected Business Impact
-
-✅ 20% reduction in backlog
-✅ 90% SLA compliance for key clients
-✅ ₹200,000 recovered revenue
-✅ 90%+ data accuracy and consistency
-✅ Real-time tracking and improved decision-making
-
-🧠 Key Insights
-
-Small firms can achieve enterprise-grade efficiency through analytics.
-
-Data quality and structure form the foundation for meaningful analysis.
-
-Statistical testing transforms anecdotal assumptions into measurable insights.
-
-Analytical frameworks are scalable and generalizable to other investigation firms.
-
-🧩 Tools & Technologies
-Category	Tools
-Data Cleaning	Google Sheets, Excel
-Analysis	Python (Pandas, NumPy, SciPy)
-Visualization	Excel Charts, Pivot Tables
-Reporting	PowerPoint, PDF
-Statistical Tests	Chi-Square, Correlation, Z-Score
-🔭 Future Scope
-
-Predictive modeling for case duration and fraud detection
-
-Automated dashboards for live SLA and revenue tracking
-
-Integration with a FastAPI backend for data management
-
-Expansion to multi-branch analysis across different cities
-
-🏁 Conclusion
-
-This project demonstrates how data analytics can transform investigative operations in the insurance sector. By identifying inefficiencies, quantifying delays, and recommending strategic improvements, this study provides Right View Investigators with a clear roadmap for achieving sustainable growth and operational excellence.
-
-🙏 Acknowledgement
-
-Special thanks to Right View Investigators, Madurai, for providing access to real operational data, and to the IITM Data Science faculty for their valuable guidance and evaluation framework.
+**Analyst:** Muneeshwari N  
+**Domain:** Insurance Operations & Business Analytics  
+**Organization studied:** Right View Investigators, Madurai, Tamil Nadu  
+**Data period:** January – June 2025
